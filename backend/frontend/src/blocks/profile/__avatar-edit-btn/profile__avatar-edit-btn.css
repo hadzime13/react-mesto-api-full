@@ -1,0 +1,13 @@
+.profile__avatar-edit-btn {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  background-image: url('../../../images/Vector.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  /* visibility: hidden; */
+  opacity: 0;
+  /* transition: opacity 0.5s ease-out; */
+}

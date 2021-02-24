@@ -1,0 +1,14 @@
+.photo-elements__name {
+  margin: 0;
+  color: #000000;
+  padding: 25px 0 25px 21px;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  text-overflow: ellipsis; 
+  max-width: 200px; 
+  overflow: hidden; 
+  white-space: nowrap; 
+}

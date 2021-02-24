@@ -1,0 +1,11 @@
+@import url('./__image/photo-elements__image.css');
+@import url('./__list-item/photo-elements__list-item.css');
+@import url('./__list/photo-elements__list.css');
+@import url('./__name/photo-elements__name.css');
+@import url('./__like/photo-elements__like.css');
+@import url('./__like/_active/photo-elements__like_active.css');
+@import url('./__delete-btn/photo-elements__delete-btn.css');
+@import url('./__delete-btn/_inactive/photo-elements__delete-btn_inactive.css');
+@import url('./__like-span/photo-elements__like-span.css');
+@import url('./__like-wrapper/photo-elements__like-wrapper.css');
+

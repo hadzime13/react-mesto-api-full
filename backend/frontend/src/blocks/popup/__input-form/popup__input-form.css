@@ -1,0 +1,10 @@
+.popup__input-form {
+  padding: 54px 0 0;
+  border: none;
+}
+
+@media (max-width: 650px) {
+  .popup__input-form {
+    padding: 24px 0 0;
+  }
+}

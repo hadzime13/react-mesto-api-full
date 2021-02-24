@@ -1,0 +1,11 @@
+.photo-elements__list-item {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  overflow: hidden;
+}

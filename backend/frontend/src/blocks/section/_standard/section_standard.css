@@ -1,0 +1,18 @@
+.section_standard {
+  width: 100%;
+  max-width: 882px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 950px) {
+  .section_standard {
+    max-width: 582px;
+  }
+}
+
+@media (max-width: 650px) {
+  .section_standard {
+    max-width: 282px;
+  }
+}
