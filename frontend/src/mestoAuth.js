@@ -1,7 +1,7 @@
-const BASE_URL = 'http://api.hadzime.students.nomoredomains.icu';
+// const BASE_URL = 'http://api.hadzime.students.nomoredomains.icu';
+const BASE_URL = 'http://localhost:3000';
 
 const handleResponse = (response) => response.json();
-
 
 const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {

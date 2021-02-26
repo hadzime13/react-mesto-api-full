@@ -9,7 +9,6 @@ const {
 } = require('../errors/index');
 const { JWT_SECRET, JWT_TTL } = require('../config/index');
 
-const { NODE_ENV } = process.env;
 
 // Контроллер аутентификации
 const login = (req, res, next) => {
@@ -30,10 +29,11 @@ const login = (req, res, next) => {
           throw new Unauthorized('Неверное имя пользователя или пароль');
         })
         .then((loggedUser) => {
-          const token = jwt.sign({ _id: loggedUser._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-secret', {
+          const token = jwt.sign({ _id: loggedUser._id }, JWT_SECRET , {
             expiresIn: JWT_TTL,
           });
           res.send({ token });
+          console.log(JWT_SECRET, JWT_TTL, '1')
         });
     })
 
