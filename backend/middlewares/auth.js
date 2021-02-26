@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { Forbidden } = require('../errors/index');
-const { JWT_SECRET } = require('../config/index');
+// const { JWT_SECRET } = require('../config/index');
 
 const auth = (req, res, next) => {
   const { authorization } = req.headers;
@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
   try {
     payload = jwt.verify(
       token,
-      JWT_SECRET
+      'secret'
     );
   } catch (err) {
     throw new Forbidden('Необходима авторизация');

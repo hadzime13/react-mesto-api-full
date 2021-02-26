@@ -29,8 +29,8 @@ const login = (req, res, next) => {
           throw new Unauthorized('Неверное имя пользователя или пароль');
         })
         .then((loggedUser) => {
-          const token = jwt.sign({ _id: loggedUser._id }, JWT_SECRET , {
-            expiresIn: JWT_TTL,
+          const token = jwt.sign({ _id: loggedUser._id }, 'secret' , {
+            expiresIn: '7d',
           });
           res.send({ token });
           console.log(JWT_SECRET, JWT_TTL, '1')
