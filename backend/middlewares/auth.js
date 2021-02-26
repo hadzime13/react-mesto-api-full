@@ -3,7 +3,7 @@ const { Forbidden } = require('../errors/index');
 // const { JWT_SECRET } = require('../config/index');
 
 const auth = (req, res, next) => {
-  const { authorization } = req.headers;
+  const authorization  = req.headers.Authorization;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     throw new Forbidden('Необходима авторизация');
@@ -19,7 +19,6 @@ const auth = (req, res, next) => {
     throw new Forbidden('Необходима авторизация');
   }
   req.user = payload;
-  console.log(JWT_SECRET);
   next();
 };
 
