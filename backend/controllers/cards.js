@@ -15,13 +15,14 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.send(card))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        throw new BadRequest('Некорректные данные карточки');
-      }
-      next(err);
-    });
+    .then((card) => res.send(card) )
+    // .catch((err) => {
+
+    //   if (err.name === 'ValidationError') {
+    //     throw new BadRequest('Некорректные данные карточки');
+    //   }
+    // })
+    .catch(() => next(new BadRequest('Некорректные данные карточки')));
 };
 
 // Удаляем карточку
@@ -41,7 +42,7 @@ const deleteCard = (req, res, next) => {
         );
       }
       return Card.findByIdAndRemove(cardID).then(() =>
-        res.send('Карточка удалена успешно')
+        res.send({ message: 'Карточка удалена успешно'})
       );
     })
     .catch((err) => next(err));

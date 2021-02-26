@@ -54,6 +54,9 @@ function App() {
     api
       .uploadCard(cardData)
       .then((newCard) => {
+        if(newCard.message) {
+          return Promise.reject(`Ошибка: ${newCard.message}`)
+        }
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
@@ -64,7 +67,7 @@ function App() {
 
   // Функция поддержки лайков
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((like) => like._id === currentUser._id);
+    const isLiked = card.likes.some((like) => like === currentUser._id);
     api
       .changeLikeStatus(card._id, isLiked)
       .then((newCard) => {
@@ -79,7 +82,7 @@ function App() {
   const handleCardDelete = (card) => {
     api
       .deleteCard(card._id)
-      .then(() => {
+      .then((res) => {
         const newCards = cards.filter((c) => c._id !== card._id);
         setCards(newCards);
       })
@@ -125,6 +128,9 @@ function App() {
     api
       .updateUser(userData)
       .then((res) => {
+        if(res.message) {
+          return Promise.reject(res.message);
+        }
         setCurrentUser(res);
         closeAllPopups();
       })
@@ -137,6 +143,9 @@ function App() {
     api
       .updateUserAvatar(newAvatar)
       .then((res) => {
+        if(res.message) {
+          return Promise.reject(res.message);
+        }
         setCurrentUser(res);
         closeAllPopups();
       })
@@ -159,21 +168,20 @@ function App() {
             });
             return Promise.reject(`Ошибка: ${res.message}`);
           }
-          if (res.data.email) {
+          if (res.email) {
             setLoggedIn(true);
             setUserdata({
-              email: res.data.email,
+              email: res.email,
             });
+            setCurrentUser(res);
+            api.setToken(jwt);
             history.push('/');
           }
         })
         .catch((res) => {
-          console.log(res);
           setRegisterState({
             state: false,
-            message: 'Что-то пошло не так...',
           });
-          setInfoTooltipState(true);
         });
     }
   };
@@ -182,16 +190,28 @@ function App() {
     mestoAuth
       .register(email, password)
       .then((res) => {
-        if (res.error || res.message) {
+        if (res.message === 'celebrate request validation failed') {
           setRegisterState({
             state: false,
-            message: `${res.error ? res.error : res.message}`,
+            message: `${res.validation.body.message}.`,
           });
           setInfoTooltipState(true);
           return Promise.reject(
-            `Ошибка: ${res.error ? res.error : res.message}`
+            `Ошибка: ${res.validation.body.message}.`
           );
-        } else {
+        } 
+        else if 
+        (res.error || res.message) {
+          setRegisterState({
+            state: false,
+            message: `${res.error ? res.error : res.message}.`,
+          });
+          setInfoTooltipState(true);
+          return Promise.reject(
+            `Ошибка: ${res.error ? res.error : res.message}.`
+          );
+        }
+        else {
           setRegisterState({
             state: true,
             message: 'Вы успешно зарегистрировались',
@@ -202,11 +222,6 @@ function App() {
       })
       .catch((res) => {
         console.log(res);
-        setRegisterState({
-          state: false,
-          message: 'Что-то пошло не так...',
-        });
-        setInfoTooltipState(true);
       });
   };
 
@@ -218,12 +233,14 @@ function App() {
         if (res.message) {
           setRegisterState({
             state: false,
-            message: `${res.error ? res.error : res.message}`,
-          });
+            message: `${res.error ? res.error : res.message}.`,
+          })
           setInfoTooltipState(true);
           return Promise.reject(`Ошибка: ${res.message}`);
         } else {
           localStorage.setItem('jwt', res.token);
+          setCurrentUser(res);
+          api.setToken(res.token);
           setLoggedIn(true);
           setUserdata({
             email: email,
@@ -233,11 +250,6 @@ function App() {
       })
       .catch((res) => {
         console.log(res);
-        setRegisterState({
-          state: false,
-          message: 'Что-то пошло не так...',
-        });
-        setInfoTooltipState(true);
       });
   };
 
@@ -248,6 +260,7 @@ function App() {
       email: '',
     });
     setLoggedIn(false);
+    setCurrentUser({});
   };
 
   // Изменение стейта регистрации
@@ -269,22 +282,29 @@ function App() {
   const returnToMainPage = () => {
     history.push('/');
   };
-
-  // Загрузка данных о пользователе и карточек страницы
-  React.useEffect(() => {
-    const promises = [api.getUser(), api.getInitialCards()];
-    Promise.all(promises)
-      .then(([user, cards]) => {
-        setCurrentUser(user);
-        setCards(cards);
-      })
-      .catch((res) => {
-        api.handleResponseError(res);
-      });
-  }, []);
   React.useEffect(() => {
     tokenCheck();
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      return;
+    }
+    setLoggedIn(true);
+    api.setToken(token);
   }, []);
+
+  React.useEffect(() => {
+    if (loggedIn) {
+      const promises = [api.getUser(), api.getInitialCards()];
+      Promise.all(promises)
+        .then(([user, cards]) => {
+          setCurrentUser(user);
+          setCards(cards);
+        })
+        .catch((res) => {
+          api.handleResponseError(res);
+        });
+    }
+  }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

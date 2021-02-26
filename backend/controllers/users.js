@@ -98,11 +98,11 @@ const getUser = (req, res, next) => {
 
 // Обновляем профиль
 const updateUser = (req, res, next) => {
-  const { name, about, avatar } = req.body;
+  const { name, about } = req.body;
   const id = req.user._id;
   User.findByIdAndUpdate(
     id,
-    { name, about, avatar },
+    { name, about},
     { new: true, runValidators: true }
   )
     .then((user) => {

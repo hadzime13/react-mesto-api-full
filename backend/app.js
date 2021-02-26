@@ -1,13 +1,14 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const usersRouter = require('./routes/users.js');
 const cardsRouter = require('./routes/cards.js');
 const errorHandler = require('./middlewares/errorHandler');
-const { createUser, login } = require('./controllers/users');
-const userValidator = require('./middlewares/validators/userValidator');
+const loginRouter = require('./routes/login');
+const registerRouter = require('./routes/register');
 const auth = require('./middlewares/auth');
 const { NotFound } = require('./errors/index');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -23,16 +24,17 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(requestLogger);
 
-app.post('/signin', login);
-app.post('/signup', userValidator, createUser);
+app.use('/signup', registerRouter);
+app.use('/signin', loginRouter);
 
-app.use(auth);
+// app.use(auth);
 
-app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
+app.use('/users', auth, usersRouter);
+app.use('/cards', auth, cardsRouter);
 app.all('*', () => {
   throw new NotFound('Запрашиваемый ресурс не найден');
 });

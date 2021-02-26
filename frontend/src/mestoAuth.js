@@ -1,7 +1,7 @@
-const BASE_URL = 'https://auth.nomoreparties.co';
+const BASE_URL = 'http://localhost:3000';
 
 const handleResponse = (response) => response.json();
-// response.ok ? response.json() : Promise.reject(`Ошибка: ${response.json().error}`);
+
 
 const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {

@@ -1,20 +1,24 @@
 class Api {
-  constructor({ url, headers }) {
+  constructor({ url }) {
     this._url = url;
-    this._headers = headers;
   }
-  // Метод обработки ответа
-  _handleResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(res.statusText);
-  };
 
+  // Метод чтения токена и проставления его в заголовок запроса
+
+  setToken (token) {
+    this._headers = {
+      'authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+
+  // Метод обработки ответа
+  _handleResponse(res) { 
+    return res.json();
+  }
   // Метод обработки ошибки запроса
   handleResponseError(err) {
-    console.log(`Error,${err}`);
-    return Promise.reject(err['message']);
+    console.log(err);
   };
 
   // Получение инфо о пользователе
@@ -90,14 +94,14 @@ class Api {
 
   changeLikeStatus(cardId, isLiked) {
     if (isLiked) {
-      return fetch(`${this._url}/cards/likes/${cardId}`, {
+      return fetch(`${this._url}/cards/${cardId}/likes`, {
         method: 'DELETE',
         headers: this._headers
       })
         .then(this._handleResponse)
     }
     else {
-      return fetch(`${this._url}/cards/likes/${cardId}`, {
+      return fetch(`${this._url}/cards/${cardId}/likes`, {
         method: 'PUT',
         headers: this._headers
       })
@@ -106,10 +110,11 @@ class Api {
   };
 }
 
+
+
 const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-15',
+  url: 'http://localhost:3000',
   headers: {
-    authorization: '37456d63-78f1-44ef-bbbe-976c826581c0',
     'Content-Type': 'application/json'
   }
 });
