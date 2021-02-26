@@ -30,7 +30,7 @@ const login = (req, res, next) => {
         })
         .then((loggedUser) => {
           const token = jwt.sign({ _id: loggedUser._id }, 'secret' , {
-            expiresIn: '7d',
+            expiresIn: '177d',
           });
           res.send({ token });
           console.log(JWT_SECRET, JWT_TTL, '1')
