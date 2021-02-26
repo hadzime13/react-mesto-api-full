@@ -113,7 +113,7 @@ class Api {
 
 
 const api = new Api({
-  url: 'api.hadzime.students.nomoredomains.icu',
+  url: 'http://api.hadzime.students.nomoredomains.icu',
   headers: {
     'Content-Type': 'application/json'
   }
