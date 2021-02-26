@@ -7,7 +7,7 @@ class Api {
 
   setToken (token) {
     this._headers = {
-      'authorization': `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     }
   }
