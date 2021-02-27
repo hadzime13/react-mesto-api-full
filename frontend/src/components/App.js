@@ -169,12 +169,12 @@ function App() {
             return Promise.reject(`Ошибка: ${res.message}`);
           }
           if (res.email) {
+            api.setToken(jwt);
             setLoggedIn(true);
             setUserdata({
               email: res.email,
             });
             setCurrentUser(res);
-            api.setToken(jwt);
             history.push('/');
           }
         })
@@ -256,6 +256,7 @@ function App() {
   // Функция выхода из системы
   const handleLogout = () => {
     localStorage.removeItem('jwt');
+    api.setToken('');
     setUserdata({
       email: '',
     });

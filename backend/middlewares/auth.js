@@ -3,9 +3,10 @@ const { Forbidden } = require('../errors/index');
 // const { JWT_SECRET } = require('../config/index');
 
 const auth = (req, res, next) => {
-  const authorization  = req.headers.Authorization;
+  const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
+    console.log(authorization);
     throw new Forbidden('Необходима авторизация');
   }
   const token = authorization.replace('Bearer ', '');
