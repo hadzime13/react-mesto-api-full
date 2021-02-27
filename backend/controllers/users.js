@@ -7,8 +7,7 @@ const {
   Conflict,
   Unauthorized,
 } = require('../errors/index');
-const { JWT_SECRET, JWT_TTL } = require('../config/index');
-
+const { JWT_SECRET, JWT_TTL, NODE_ENV } = require('../config/index');
 
 // Контроллер аутентификации
 const login = (req, res, next) => {
@@ -29,9 +28,11 @@ const login = (req, res, next) => {
           throw new Unauthorized('Неверное имя пользователя или пароль');
         })
         .then((loggedUser) => {
-          const token = jwt.sign({ _id: loggedUser._id }, 'secret');
+          const token = jwt.sign({ _id: loggedUser._id }, JWT_SECRET, {
+            expiresIn: JWT_TTL,
+          });
           res.send({ token });
-          console.log(JWT_SECRET, JWT_TTL, '1')
+          console.log(JWT_SECRET, JWT_TTL, '1', NODE_ENV);
         });
     })
 
@@ -102,7 +103,7 @@ const updateUser = (req, res, next) => {
   const id = req.user._id;
   User.findByIdAndUpdate(
     id,
-    { name, about},
+    { name, about },
     { new: true, runValidators: true }
   )
     .then((user) => {

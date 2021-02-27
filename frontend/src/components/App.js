@@ -20,9 +20,9 @@ function App() {
   // Переменные состояния
   // Массив карточек
   const [cards, setCards] = useState([]);
-  //открыт попап профиля или нет
+  // открыт попап профиля или нет
   const [isEditProfilePopupOpen, setPopupProfileState] = useState(false);
-  //открыт попап добавления карточки или нет
+  // открыт попап добавления карточки или нет
   const [isAddPlacePopupOpen, setPopupPlaceState] = useState(false);
   // открыт попап редактирования аватара или нет
   const [isEditAvatarPopupOpen, setPopupAvatarState] = useState(false);
@@ -217,7 +217,7 @@ function App() {
             message: 'Вы успешно зарегистрировались',
           });
           setInfoTooltipState(true);
-          history.push('/sign-in');
+          history.push('/signin');
         }
       })
       .catch((res) => {
@@ -273,11 +273,11 @@ function App() {
   // Функции переадресации для кнопок Вход и Регистрация и на Главную
 
   const pushToLogin = () => {
-    history.push('/sign-in');
+    history.push('/signin');
   };
 
   const pushToRegister = () => {
-    history.push('/sign-up');
+    history.push('/signup');
   };
 
   const returnToMainPage = () => {
@@ -336,13 +336,13 @@ function App() {
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete}
             />
-            <Route path="/sign-in">
+            <Route path="/signin">
               <Login
                 handleLogin={handleLogin}
                 handleButtonState={handleButtonState}
               />
             </Route>
-            <Route path="/sign-up">
+            <Route path="/signup">
               <Register
                 handleRegister={handleRegister}
                 handleButtonState={handleButtonState}
