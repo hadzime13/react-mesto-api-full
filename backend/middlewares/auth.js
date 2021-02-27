@@ -6,7 +6,6 @@ const auth = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    console.log(authorization);
     throw new Forbidden('Необходима авторизация');
   }
   const token = authorization.replace('Bearer ', '');

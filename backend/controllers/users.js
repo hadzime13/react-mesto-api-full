@@ -7,7 +7,7 @@ const {
   Conflict,
   Unauthorized,
 } = require('../errors/index');
-const { JWT_SECRET, JWT_TTL, NODE_ENV } = require('../config/index');
+const { JWT_SECRET, JWT_TTL } = require('../config/index');
 
 // Контроллер аутентификации
 const login = (req, res, next) => {
@@ -32,7 +32,6 @@ const login = (req, res, next) => {
             expiresIn: JWT_TTL,
           });
           res.send({ token });
-          console.log(JWT_SECRET, JWT_TTL, '1', NODE_ENV);
         });
     })
 
