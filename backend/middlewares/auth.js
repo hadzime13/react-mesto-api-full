@@ -11,10 +11,7 @@ const auth = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
   let payload;
   try {
-    payload = jwt.verify(
-      token,
-      'secret'
-    );
+    payload = jwt.verify(token, 'secret');
   } catch (err) {
     throw new Forbidden('Необходима авторизация');
   }
