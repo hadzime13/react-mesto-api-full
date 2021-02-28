@@ -1,4 +1,4 @@
-require('dotenv').config(); 
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -36,8 +36,6 @@ app.get('/crash-test', () => {
 
 app.use('/signup', registerRouter);
 app.use('/signin', loginRouter);
-
-// app.use(auth);
 
 app.use('/users', auth, usersRouter);
 app.use('/cards', auth, cardsRouter);

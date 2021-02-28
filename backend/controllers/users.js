@@ -84,6 +84,7 @@ const createUser = (req, res, next) => {
 // Получаем пользователя по id
 const getUser = (req, res, next) => {
   const id = req.user._id;
+  if(id) {
   User.findById(id)
     .then((user) => {
       if (user) {
@@ -94,6 +95,8 @@ const getUser = (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+  }
+  return new BadRequest('Не передан ID пользователя')
 };
 
 // Обновляем профиль

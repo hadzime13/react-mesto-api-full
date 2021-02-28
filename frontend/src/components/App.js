@@ -54,7 +54,10 @@ function App() {
     api
       .uploadCard(cardData)
       .then((newCard) => {
-        if(newCard.message) {
+        if (newCard.message === 'celebrate request validation failed') {
+          return Promise.reject(newCard.validation.body.message);
+        }
+        else if(newCard.message) {
           return Promise.reject(`Ошибка: ${newCard.message}`)
         }
         setCards([newCard, ...cards]);
@@ -128,7 +131,10 @@ function App() {
     api
       .updateUser(userData)
       .then((res) => {
-        if(res.message) {
+        if (res.message === 'celebrate request validation failed') {
+          return Promise.reject(res.validation.body.message);
+        }
+        else if(res.message) {
           return Promise.reject(res.message);
         }
         setCurrentUser(res);
@@ -143,7 +149,10 @@ function App() {
     api
       .updateUserAvatar(newAvatar)
       .then((res) => {
-        if(res.message) {
+        if (res.message === 'celebrate request validation failed') {
+          return Promise.reject(res.validation.body.message);
+        }
+        else if(res.message) {
           return Promise.reject(res.message);
         }
         setCurrentUser(res);
@@ -229,7 +238,17 @@ function App() {
     mestoAuth
       .authorize(email, password)
       .then((res) => {
-        if (res.message) {
+        if (res.message === 'celebrate request validation failed') {
+          setRegisterState({
+            state: false,
+            message: `${res.validation.body.message}.`,
+          });
+          setInfoTooltipState(true);
+          return Promise.reject(
+            `Ошибка: ${res.validation.body.message}.`
+          );
+        }
+        else if (res.message) {
           setRegisterState({
             state: false,
             message: `${res.error ? res.error : res.message}.`,

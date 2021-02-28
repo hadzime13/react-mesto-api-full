@@ -1,4 +1,9 @@
 const usersRouter = require('express').Router();
+const idValidator = require('../middlewares/validators/idValidator');
+const {
+  userUpdateValidator,
+  avatarUpdateValidator,
+} = require('../middlewares/validators/updateValidator');
 
 const {
   getUsers,
@@ -7,10 +12,11 @@ const {
   getUser,
 } = require('../controllers/users');
 
-
 usersRouter.get('/', getUsers);
 usersRouter.get('/me', getUser);
-usersRouter.patch('/me', updateUser);
-usersRouter.patch('/me/avatar', updateAvatar);
+// валидируется
+usersRouter.patch('/me', userUpdateValidator, updateUser);
+// валидируется
+usersRouter.patch('/me/avatar', avatarUpdateValidator, updateAvatar);
 
 module.exports = usersRouter;
