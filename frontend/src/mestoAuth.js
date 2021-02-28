@@ -1,6 +1,6 @@
-// const BASE_URL = '//www.api.hadzime.students.nomoredomains.icu';
+const BASE_URL = '//www.api.hadzime.students.nomoredomains.icu';
 
-const BASE_URL = 'http://localhost:3000';
+// const BASE_URL = 'http://localhost:3000';
 
 
 const handleResponse = (response) => response.json();
