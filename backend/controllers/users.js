@@ -50,7 +50,9 @@ const getUsers = (req, res, next) => {
 
 // Создаем пользователя
 const createUser = (req, res, next) => {
-  const { email, password, name, about, avatar } = req.body;
+  const {
+    email, password, name, about, avatar,
+  } = req.body;
 
   User.findOne({ email })
     .then((user) => {
@@ -59,15 +61,13 @@ const createUser = (req, res, next) => {
       }
       return bcrypt
         .hash(password, 10)
-        .then((hash) =>
-          User.create({
-            email,
-            password: hash,
-            name,
-            about,
-            avatar,
-          })
-        )
+        .then((hash) => User.create({
+          email,
+          password: hash,
+          name,
+          about,
+          avatar,
+        }))
         .then((regUSer) => {
           res.send({
             _id: regUSer._id,
@@ -80,11 +80,10 @@ const createUser = (req, res, next) => {
     })
     .catch((err) => next(err));
 };
-//
-// Получаем пользователя по id
+// Получаем пользователя по ID
+
 const getUser = (req, res, next) => {
-  const id = req.user._id;
-  if(id) {
+  const { id } = req.params;
   User.findById(id)
     .then((user) => {
       if (user) {
@@ -95,8 +94,24 @@ const getUser = (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+};
+// Получаем текущего пользователя
+
+const getCurrentUser = (req, res, next) => {
+  const id = req.user._id;
+  if (id) {
+    User.findById(id)
+      .then((user) => {
+        if (user) {
+          return res.send(user);
+        }
+        throw new NotFound('Пользователь не найден');
+      })
+      .catch((err) => {
+        next(err);
+      });
   }
-  return new BadRequest('Не передан ID пользователя')
+  return new BadRequest('Не передан ID пользователя');
 };
 
 // Обновляем профиль
@@ -106,7 +121,7 @@ const updateUser = (req, res, next) => {
   User.findByIdAndUpdate(
     id,
     { name, about },
-    { new: true, runValidators: true }
+    { new: true, runValidators: true },
   )
     .then((user) => {
       if (user) {
@@ -138,4 +153,5 @@ module.exports = {
   createUser,
   getUser,
   login,
+  getCurrentUser,
 };

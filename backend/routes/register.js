@@ -5,4 +5,4 @@ const { createUser } = require('../controllers/users');
 // валидируется
 registerRouter.post('/', userValidator, createUser);
 
-module.exports =  registerRouter;
+module.exports = registerRouter;

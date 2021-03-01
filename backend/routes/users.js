@@ -10,10 +10,13 @@ const {
   updateUser,
   updateAvatar,
   getUser,
+  getCurrentUser,
 } = require('../controllers/users');
 
 usersRouter.get('/', getUsers);
-usersRouter.get('/me', getUser);
+usersRouter.get('/me', getCurrentUser);
+// валидируется
+usersRouter.get('/:id', idValidator, getUser);
 // валидируется
 usersRouter.patch('/me', userUpdateValidator, updateUser);
 // валидируется

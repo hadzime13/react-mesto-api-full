@@ -3,16 +3,18 @@ const validator = require('validator');
 
 const userUpdateValidator = celebrate({
   body: {
-    name: Joi.string().min(2).max(30).required().messages({
-      'string.min': 'Поле "Имя" - минимум 2 символа',
-      'string.max': 'Поле "Имя" - максимум 30 символов',
-      'any.required': 'Имя - обязательное поле'
-    }),
-    about: Joi.string().min(2).max(30).required().messages({
-      'string.min': 'Поле "О себе" - минимум 2 символа',
-      'string.max': 'Поле "О себе" - максимум 30 символов',
-      'any.required': 'О себе - обязательное поле'
-    }),
+    name: Joi.string().min(2).max(30).required()
+      .messages({
+        'string.min': 'Поле "Имя" - минимум 2 символа',
+        'string.max': 'Поле "Имя" - максимум 30 символов',
+        'any.required': 'Имя - обязательное поле',
+      }),
+    about: Joi.string().min(2).max(30).required()
+      .messages({
+        'string.min': 'Поле "О себе" - минимум 2 символа',
+        'string.max': 'Поле "О себе" - максимум 30 символов',
+        'any.required': 'О себе - обязательное поле',
+      }),
   },
 });
 

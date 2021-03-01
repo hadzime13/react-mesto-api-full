@@ -15,8 +15,8 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
-    .then((card) => res.send(card) )
-    
+    .then((card) => res.send(card))
+
     .catch(() => next(new BadRequest('Некорректные данные карточки')));
 };
 
@@ -33,12 +33,10 @@ const deleteCard = (req, res, next) => {
       }
       if (String(card.owner) !== req.user._id) {
         throw new Forbidden(
-          'В удалении карточки другого пользователя отказано'
+          'В удалении карточки другого пользователя отказано',
         );
       }
-      return Card.findByIdAndRemove(cardID).then(() =>
-        res.send({ message: 'Карточка удалена успешно'})
-      );
+      return Card.findByIdAndRemove(cardID).then(() => res.send({ message: 'Карточка удалена успешно' }));
     })
     .catch((err) => next(err));
 };
@@ -52,7 +50,7 @@ const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     cardID,
     { $addToSet: { likes: req.user._id } },
-    { new: true }
+    { new: true },
   )
     .then((card) => {
       if (!card) {
@@ -72,7 +70,7 @@ const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     cardID,
     { $pull: { likes: req.user._id } },
-    { new: true }
+    { new: true },
   )
     .then((card) => {
       if (!card) {
