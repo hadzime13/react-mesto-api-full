@@ -99,7 +99,7 @@ class Api {
 }
 
 const api = new Api({
-  url: '//www.api.hadzime.students.nomoredomains.icu',
+  url: '//www.api.hadzime-mesto.xyz',
   // url: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json',
