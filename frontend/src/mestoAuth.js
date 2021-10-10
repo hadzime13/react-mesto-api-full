@@ -1,4 +1,4 @@
-const BASE_URL = '//www.api.hadzime.students.nomoredomains.icu';
+const BASE_URL = '//www.api.hadzime-mesto.xyz';
 
 // const BASE_URL = 'http://localhost:3000';
 
