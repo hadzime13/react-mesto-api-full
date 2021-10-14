@@ -1,19 +1,12 @@
-# Готовый проект MESTO
-# backend/frontend
+# Проект MESTO
 
-## Директории
+## :city_sunrise: Учебный проект с возможностью регистрации и авторизации пользователей, добавления и удаления карточек и конечно - лайки! :yellow_heart:
 
-`/backend` — папка с проектом на Node.js  
-`/frontend` — папка с проектом на React
+`/backend` — папка с бэкенд частью проекта на Node.js  
+`/frontend` — папка с фронтенд частью проектом на React
 
 ## Адреса сервера
 
-### Frontend
-hadzime.students.nomoredomains.icu
-www.hadzime.students.nomoredomains.icu
-178.154.250.213
+Фронтенд - www.hadzime-mesto.xyz
 
-### backend
-
-api.hadzime.students.nomoredomains.icu
-www.api.hadzime.students.nomoredomains.icu
+Бэкенд - www.api.hadzime-mesto.xyz
