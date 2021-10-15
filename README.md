@@ -21,3 +21,8 @@
 - CSS
 - JavaScript
 - React
+
+
+#### Запуск проекта 
+``npm run start`` – старт сервера на http://localhost:3000/  
+``npm run dev`` – старт сервера в режиме ``hot reload`` на http://localhost:3000/
